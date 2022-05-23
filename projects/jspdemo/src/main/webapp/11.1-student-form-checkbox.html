@@ -1,0 +1,43 @@
+<html>
+
+<head>
+
+	<title>Student Registration Form</title>
+	
+	<style>
+		input:not([type=submit]):not([type=checkbox]) {
+			display: block;
+			margin-bottom: 10px;
+		}
+		fieldset {
+			margin-bottom: 10px;
+		}
+	</style>
+	
+</head>
+
+<body>
+
+<form action="11.2-student-form-checkbox-response.jsp">
+
+	<label for="firstName">First name:</label>
+	<input type="text" id="firstName" name="firstName" />
+	
+	<label for="lastName">Last name:</label>
+	<input type="text" id="lastName" name="lastName" />
+	
+	<fieldset>
+		<legend>Favorite Programming Language:</legend>
+		<input type="checkbox" id="flJava" name="favoriteLanguage" value="Java" /> <label for="flJava">Java</label>
+		<input type="checkbox" id="flC" name="favoriteLanguage" value="C#" /> <label for="flC">C#</label>
+		<input type="checkbox" id="flPHP" name="favoriteLanguage" value="PHP" /> <label for="flPHP">PHP</label>
+		<input type="checkbox" id="flRuby" name="favoriteLanguage" value="Ruby" /> <label for="flRuby">Ruby</label>
+	</fieldset>
+	
+	<input type="submit" value="Submit" />
+
+</form>
+
+</body>
+
+</html>
