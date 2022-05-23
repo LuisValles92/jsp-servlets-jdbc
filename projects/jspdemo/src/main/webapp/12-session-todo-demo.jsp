@@ -3,6 +3,11 @@
 
 <body>
 	
+	<!-- 
+	Cada navegador tiene un objeto de sesión único en la memoria del servidor Tomcat
+	y puede realizar un seguimiento de las acciones individuales de cada usuario
+	-->
+	
 	<!-- Step 1: Create HTML form -->
 	<form action="12-session-todo-demo.jsp">
 		<label for="theItem">Add new item:</label>
