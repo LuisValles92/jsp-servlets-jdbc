@@ -11,6 +11,14 @@ scope="session" />
 
 <html>
 
+<head>
+
+	<title></title>
+
+	<style></style>
+
+</head>
+
 <body>
 
 	<a href="8-i18n-messages-test.jsp?theLocale=es_ES">Spanish (ES)</a>
