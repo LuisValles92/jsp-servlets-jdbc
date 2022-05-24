@@ -1,4 +1,4 @@
-<%@page import="java.util.List, com.luv2code.web.jdbc.Student"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 
@@ -9,11 +9,6 @@
 	<link type="text/css" rel="stylesheet" href="css/style.css">
 
 </head>
-
-<%
-	// Get the students from the request object (sent by servlet)
-	List<Student> students = (List<Student>) request.getAttribute("STUDENT_LIST");
-%>
 
 <body>
 
@@ -31,15 +26,15 @@
 					<th>Last Name</th>
 					<th>Email</th>
 				</tr>
-				<% for(Student student : students) { %>
+				<c:forEach var="student" items="${STUDENT_LIST}">
 				
 					<tr>
-						<td><%= student.getFirstName() %></td>
-						<td><%= student.getLastName() %></td>
-						<td><%= student.getEmail() %></td>
+						<td>${student.firstName}</td>
+						<td>${student.lastName}</td>
+						<td>${student.email}</td>
 					</tr>
-					
-				<% } %>
+
+				</c:forEach>
 			</table>
 		</div>
 	</div>
