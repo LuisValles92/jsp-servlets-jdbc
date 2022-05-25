@@ -31,13 +31,24 @@
 					<th>First Name</th>
 					<th>Last Name</th>
 					<th>Email</th>
+					<th>Action</th>
 				</tr>
 				<c:forEach var="student" items="${STUDENT_LIST}">
+				
+					<!-- Set up a link for each student -->
+					<c:url var="updateLink" value="StudentControllerServlet">
+						<c:param name="command" value="LOAD" />
+						<c:param name="id" value="${student.id}" />
+					</c:url>
 				
 					<tr>
 						<td>${student.firstName}</td>
 						<td>${student.lastName}</td>
 						<td>${student.email}</td>
+						<td>
+							<!-- http://localhost:8080/web-student-tracker/StudentControllerServlet;jsessionid=3F11CC444D7B4EF30C26D3B772A7A7AF?command=LOAD&studentId=1 -->
+							<a href="${updateLink}">Update</a>
+						</td>
 					</tr>
 
 				</c:forEach>

@@ -3,7 +3,7 @@
 
 <head>
 
-	<title>Add Student</title>
+	<title>Update Student</title>
 
 	<link type="text/css" rel="stylesheet" href="css/style.css">
 	<link type="text/css" rel="stylesheet" href="css/add-update-student-style.css">
@@ -19,25 +19,30 @@
 	</div>
 	
 	<div id="container">
-		<h3>Add Student</h3>
+		<h3>Update Student</h3>
 		
 		<form action="StudentControllerServlet" method="GET">
 		
-			<input type="hidden" name="command" value="ADD" />
+			<input type="hidden" name="command" value="UPDATE" />
+			
+			<input type="hidden" name="id" value="${THE_STUDENT.id}" />
 			
 			<table>
 				<tbody>
 					<tr>
 						<td><label for="firstName">First name:</label></td>
-						<td><input type="text" id="firstName" name="firstName"/></td>
+						<td><input type="text" id="firstName" name="firstName"
+								value="${THE_STUDENT.firstName}" /></td>
 					</tr>
 					<tr>
 						<td><label for="lastName">Last name:</label></td>
-						<td><input type="text" id="lastName" name="lastName"/></td>
+						<td><input type="text" id="lastName" name="lastName"
+								value="${THE_STUDENT.lastName}" /></td>
 					</tr>
 					<tr>
 						<td><label for="email">Email:</label></td>
-						<td><input type="text" id="email" name="email"/></td>
+						<td><input type="text" id="email" name="email"
+								value="${THE_STUDENT.email}" /></td>
 					</tr>
 					<tr>
 						<td><label></label></td>

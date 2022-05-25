@@ -23,7 +23,7 @@ public class StudentDbUtil {
 		
 		try {
 			
-			// Get a connection
+			// Get db connection
 			connection = dataSource.getConnection();
 			
 			// Create sql statement
@@ -68,7 +68,7 @@ public class StudentDbUtil {
 		
 		try {
 			
-			// Get a connection
+			// Get db connection
 			connection = dataSource.getConnection();
 			
 			// Create sql for insert
@@ -82,7 +82,93 @@ public class StudentDbUtil {
 			preparedStatement.setString(2, student.getLastName());
 			preparedStatement.setString(3, student.getEmail());
 			
-			// Execute sql insert
+			// Execute preparedstatement
+			preparedStatement.execute();
+			
+		} finally {
+			
+			// Close JDBC objects
+			close(connection, preparedStatement, null);
+			
+		}
+		
+	}
+	
+	public Student getStudent(String id) throws Exception {
+		
+		Student student = null;
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		int studentId;
+		
+		try {
+			
+			// Convert student id to int
+			studentId = Integer.parseInt(id);
+			
+			// Get db connection
+			connection = dataSource.getConnection();
+			
+			// Create sql to get selected student
+			final String sql = "select * from student where id=?";
+			preparedStatement = connection.prepareStatement(sql);
+			
+			// Set the param value for the student
+			preparedStatement.setInt(1, studentId);
+			
+			// Execute query preparedstatement
+			resultSet = preparedStatement.executeQuery();
+			
+			// Retrieve data from result set row
+			if (resultSet.next()) {
+				
+				final String firstName = resultSet.getString("first_name");
+				final String lastName = resultSet.getString("last_name");
+				final String email = resultSet.getString("email");
+				
+				// Use the studentId during construction
+				student = new Student(studentId, firstName, lastName, email);
+				
+			} else {
+				throw new Exception("Could not find student id: " + studentId);
+			}
+			
+			return student;
+			
+		} finally {
+			
+			// Close JDBC objects
+			close(connection, preparedStatement, resultSet);
+			
+		}
+		
+	}
+	
+	public void updateStudent(Student student) throws Exception {
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try {
+			
+			// Get db connection
+			connection = dataSource.getConnection();
+			
+			// Create sql for update preparedstatement
+			final String sql = "update student "
+								+ "set first_name=?, last_name=?, email=? "
+								+ "where id=?";
+			preparedStatement = connection.prepareStatement(sql);
+			
+			// Set the param values for the student
+			preparedStatement.setString(1, student.getFirstName());
+			preparedStatement.setString(2, student.getLastName());
+			preparedStatement.setString(3, student.getEmail());
+			preparedStatement.setInt(4, student.getId());
+			
+			// Execute preparedstatement
 			preparedStatement.execute();
 			
 		} finally {
