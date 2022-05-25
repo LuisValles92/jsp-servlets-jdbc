@@ -31,13 +31,19 @@
 					<th>First Name</th>
 					<th>Last Name</th>
 					<th>Email</th>
-					<th>Action</th>
+					<th>Actions</th>
 				</tr>
 				<c:forEach var="student" items="${STUDENT_LIST}">
 				
-					<!-- Set up a link for each student -->
+					<!-- Set up a link to update a student -->
 					<c:url var="updateLink" value="StudentControllerServlet">
 						<c:param name="command" value="LOAD" />
+						<c:param name="id" value="${student.id}" />
+					</c:url>
+					
+					<!-- Set up a link to delete a student -->
+					<c:url var="deleteLink" value="StudentControllerServlet">
+						<c:param name="command" value="DELETE" />
 						<c:param name="id" value="${student.id}" />
 					</c:url>
 				
@@ -46,8 +52,12 @@
 						<td>${student.lastName}</td>
 						<td>${student.email}</td>
 						<td>
-							<!-- http://localhost:8080/web-student-tracker/StudentControllerServlet;jsessionid=3F11CC444D7B4EF30C26D3B772A7A7AF?command=LOAD&studentId=1 -->
+							<!-- http://localhost:8080/web-student-tracker/StudentControllerServlet;jsessionid=3F11CC444D7B4EF30C26D3B772A7A7AF?command=LOAD&id=1 -->
 							<a href="${updateLink}">Update</a>
+							|
+							<!-- http://localhost:8080/web-student-tracker/StudentControllerServlet;jsessionid=0E5CE090CCD7A71A068CCC586C7DCA59?command=DELETE&id=5 -->
+							<a href="${deleteLink}"
+							onclick="if (!(confirm('Are you sure you want to delete this student?'))) return false;">Delete</a>
 						</td>
 					</tr>
 

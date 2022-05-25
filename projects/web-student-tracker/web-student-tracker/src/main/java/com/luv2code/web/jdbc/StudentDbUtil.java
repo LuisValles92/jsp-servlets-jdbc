@@ -180,6 +180,38 @@ public class StudentDbUtil {
 		
 	}
 	
+	public void deleteStudent(String id) throws Exception {
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		int studentId;
+		
+		try {
+			// Convert student id to int
+			studentId = Integer.parseInt(id);
+			
+			// Get db connection
+			connection = dataSource.getConnection();
+			
+			// Create sql for delete preparedstatement
+			final String sql = "delete from student where id=?";
+			preparedStatement = connection.prepareStatement(sql);
+			
+			// Set the param values for the student
+			preparedStatement.setInt(1, studentId);
+			
+			// Execute preparedstatement
+			preparedStatement.execute();
+			
+		} finally {
+			
+			// Close JDBC objects
+			close(connection, preparedStatement, null);
+			
+		}
+		
+	}
+	
 	private void close(Connection connection, Statement statement, ResultSet resultSet) {
 		
 		try {
