@@ -36,7 +36,7 @@ public class StudentControllerServlet extends HttpServlet {
 		}
 		
 	}
-
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -57,10 +57,6 @@ public class StudentControllerServlet extends HttpServlet {
 				case "LIST":
 					// List the students ... in MVC fashion
 					listStudents(request, response);
-					break;
-				
-				case "ADD":
-					addStudent(request, response);
 					break;
 					
 				case "LOAD":
@@ -99,24 +95,6 @@ public class StudentControllerServlet extends HttpServlet {
 		// Send to JSP page (view)
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/list-students.jsp");
 		requestDispatcher.forward(request, response);
-		
-	}
-	
-	private void addStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		// Read student info from form data
-		final String firstName = request.getParameter("firstName");
-		final String lastName = request.getParameter("lastName");
-		final String email = request.getParameter("email");
-		
-		// Create a new studen object
-		final Student student = new Student(firstName, lastName, email);
-		
-		// Add the student to the database
-		studentDbUtil.addStudent(student);
-		
-		// Send back to main page (the student list)
-		listStudents(request, response);
 		
 	}
 	
@@ -166,6 +144,53 @@ public class StudentControllerServlet extends HttpServlet {
 		
 		// Send them back to "list students" page
 		listStudents(request, response);
+		
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		try {
+			
+			// Read the "command" parameter
+			String theCommand = request.getParameter("command");
+			
+			// Route to the appropiate method
+			switch (theCommand) {
+					
+				case "ADD":
+					addStudent(request, response);
+					break;
+					
+				default:
+					listStudents(request, response);
+					
+			}
+			
+			
+			
+		} catch (Exception exception) {
+			throw new ServletException(exception);
+		}
+		
+	}
+	
+	private void addStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		// Read student info from form data
+		final String firstName = request.getParameter("firstName");
+		final String lastName = request.getParameter("lastName");
+		final String email = request.getParameter("email");
+		
+		// Create a new student object
+		final Student student = new Student(firstName, lastName, email);
+		
+		// Add the student to the database
+		studentDbUtil.addStudent(student);
+		
+		// Send back to main page (the student list)
+		// SEND AS REDIRECT to avoid multiple-browser reload issue
+		response.sendRedirect(request.getContextPath() + "/StudentControllerServlet?command=LIST");
 		
 	}
 

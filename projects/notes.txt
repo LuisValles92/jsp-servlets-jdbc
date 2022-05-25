@@ -1,0 +1,17 @@
+Note: The system may give you an error about the Java Runtime Environment.
+You can resolve this with the following steps.
+
+	1. Right-click your Project and select Properties ...
+	2. In the left hand menu, click Java Build Path
+	3. In the center of the dialog, click Libraries
+	4. In the list, select JRE System Library
+	5. Click the Edit button on right-hand side of this dialog
+	6. Select the radio button: Workspace default JRE
+	7. Click Finish
+
+OR
+
+	1. Right-click your Project and select Properties ...
+	2. In the left hand menu, click Project Facets
+	3. Choose Java version 1.8
+	4. Click Apply and Close
