@@ -13,7 +13,7 @@ public class StudentDbUtil {
 		this.dataSource = dataSource;
 	}
 	
-	public List<Student> getStudents() throws Exception {
+	public List<Student> getStudents() throws SQLException {
 		
 		List<Student> students = new ArrayList<>();
 		
@@ -30,7 +30,7 @@ public class StudentDbUtil {
 			statement = connection.createStatement();
 			
 			// Execute query
-			final String sql = "select * from student order by last_name";
+			final String sql = "select * from student order by first_name";
 			resultSet = statement.executeQuery(sql);
 			
 			// Process result set
@@ -61,7 +61,7 @@ public class StudentDbUtil {
 		
 	}
 
-	public void addStudent(Student student) throws Exception {
+	public void postStudent(Student student) throws SQLException {
 		
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -94,7 +94,7 @@ public class StudentDbUtil {
 		
 	}
 	
-	public Student getStudent(String id) throws Exception {
+	public Student getStudent(String id) throws NumberFormatException, SQLException, Exception {
 		
 		Student student = null;
 		
@@ -146,7 +146,7 @@ public class StudentDbUtil {
 		
 	}
 	
-	public void updateStudent(Student student) throws Exception {
+	public void putStudent(Student student) throws SQLException {
 		
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -180,7 +180,7 @@ public class StudentDbUtil {
 		
 	}
 	
-	public void deleteStudent(String id) throws Exception {
+	public void deleteStudent(String id) throws NumberFormatException, SQLException {
 		
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;

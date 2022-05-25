@@ -1,11 +1,11 @@
 package com.luv2code.web.jdbc;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import javax.sql.DataSource;
@@ -27,13 +27,7 @@ public class StudentControllerServlet extends HttpServlet {
 		super.init();
 		
 		// Create our student db util ... and pass in the connection pool / datasource
-		try {
-			
-			studentDbUtil = new StudentDbUtil(dataSource);
-			
-		} catch (Exception exception) {
-			throw new ServletException(exception);
-		}
+		studentDbUtil = new StudentDbUtil(dataSource);
 		
 	}
 	
@@ -53,18 +47,9 @@ public class StudentControllerServlet extends HttpServlet {
 			
 			// Route to the appropiate method
 			switch (theCommand) {
-			
-				case "LIST":
-					// List the students ... in MVC fashion
-					listStudents(request, response);
-					break;
 					
 				case "LOAD":
 					loadStudent(request, response);
-					break;
-					
-				case "UPDATE":
-					updateStudent(request, response);
 					break;
 					
 				case "DELETE":
@@ -76,15 +61,21 @@ public class StudentControllerServlet extends HttpServlet {
 					
 			}
 			
-			
-			
+		} catch (NumberFormatException numberFormatException) {
+			throw new ServletException(numberFormatException);
+		} catch (SQLException sqlException) {
+			throw new ServletException(sqlException);
+		} catch (ServletException servletException) {
+			throw new ServletException(servletException);
+		} catch (IOException ioException) {
+			throw new ServletException(ioException);
 		} catch (Exception exception) {
 			throw new ServletException(exception);
 		}
 		
 	}
 
-	private void listStudents(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	private void listStudents(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
 		
 		// Get students from db util
 		List<Student> students = studentDbUtil.getStudents();
@@ -98,10 +89,14 @@ public class StudentControllerServlet extends HttpServlet {
 		
 	}
 	
-	private void loadStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	private void loadStudent(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, SQLException, Exception, ServletException, IOException {
 		
 		// Read student id from form data
 		final String id = request.getParameter("id");
+		
+		if (id == null) {
+			throw new Exception("Missing id parameter");
+		}
 		
 		// Get student form database (db util)
 		final Student student = studentDbUtil.getStudent(id);
@@ -115,35 +110,19 @@ public class StudentControllerServlet extends HttpServlet {
 		
 	}
 	
-	private void updateStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		// Read student info from form data
-		final int id = Integer.parseInt(request.getParameter("id"));
-		final String firstName = request.getParameter("firstName");
-		final String lastName = request.getParameter("lastName");
-		final String email = request.getParameter("email");
-		
-		// Create a new student object
-		final Student student = new Student(id, firstName, lastName, email);
-		
-		// Perform update on database
-		studentDbUtil.updateStudent(student);
-		
-		// Send back to main page (the student list)
-		listStudents(request, response);
-		
-	}
-	
-	private void deleteStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	private void deleteStudent(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, SQLException, Exception, IOException {
 		
 		// Read student id from form data
 		final String id = request.getParameter("id");
 		
+		if (id == null) {
+			throw new Exception("Missing id parameter");
+		}
+		
 		// Delete student from database
 		studentDbUtil.deleteStudent(id);
 		
-		// Send them back to "list students" page
-		listStudents(request, response);
+		sendRedirect(request, response);
 		
 	}
 
@@ -153,29 +132,37 @@ public class StudentControllerServlet extends HttpServlet {
 		try {
 			
 			// Read the "command" parameter
-			String theCommand = request.getParameter("command");
+			final String theCommand = request.getParameter("command");
+			
+			if (theCommand == null) {
+				throw new Exception("Missing command parameter");
+			}
 			
 			// Route to the appropiate method
 			switch (theCommand) {
-					
-				case "ADD":
-					addStudent(request, response);
+			
+				case "POST":
+					postStudent(request, response);
+					break;
+			 
+				case "PUT":
+					putStudent(request, response);
 					break;
 					
 				default:
-					listStudents(request, response);
+					throw new Exception("Command invalid: " + theCommand);
 					
 			}
 			
-			
-			
+		} catch (SQLException sqlException) {
+			throw new ServletException(sqlException);
 		} catch (Exception exception) {
 			throw new ServletException(exception);
 		}
 		
 	}
 	
-	private void addStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	private void postStudent(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 		
 		// Read student info from form data
 		final String firstName = request.getParameter("firstName");
@@ -186,11 +173,40 @@ public class StudentControllerServlet extends HttpServlet {
 		final Student student = new Student(firstName, lastName, email);
 		
 		// Add the student to the database
-		studentDbUtil.addStudent(student);
+		studentDbUtil.postStudent(student);
+		
+		sendRedirect(request, response);
+		
+	}
+	
+	private void putStudent(HttpServletRequest request, HttpServletResponse response) throws Exception, SQLException, IOException {
+		
+		// Read student info from form data
+		final String id = request.getParameter("id");
+		
+		if (id == null) {
+			throw new Exception("Missing id parameter");
+		}
+		
+		final String firstName = request.getParameter("firstName");
+		final String lastName = request.getParameter("lastName");
+		final String email = request.getParameter("email");
+		
+		// Create a new student object
+		final Student student = new Student(Integer.parseInt(id), firstName, lastName, email);
+		
+		// Perform update on database
+		studentDbUtil.putStudent(student);
+		
+		sendRedirect(request, response);
+		
+	}
+
+	private void sendRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
 		// Send back to main page (the student list)
 		// SEND AS REDIRECT to avoid multiple-browser reload issue
-		response.sendRedirect(request.getContextPath() + "/StudentControllerServlet?command=LIST");
+		response.sendRedirect(request.getContextPath() + "/StudentControllerServlet");
 		
 	}
 

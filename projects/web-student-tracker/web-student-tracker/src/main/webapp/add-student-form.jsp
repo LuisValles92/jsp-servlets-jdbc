@@ -23,7 +23,7 @@
 		
 		<form action="StudentControllerServlet" method="POST">
 		
-			<input type="hidden" name="command" value="ADD" />
+			<input type="hidden" name="command" value="POST" />
 			
 			<table>
 				<tbody>
