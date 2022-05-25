@@ -48,7 +48,7 @@
 			
 		</form>
 		
-		<div style="clear: both;"></div>
+		<div class="clear-both"></div>
 		<p>
 			<a href="StudentControllerServlet">Back to List</a>
 		</p>

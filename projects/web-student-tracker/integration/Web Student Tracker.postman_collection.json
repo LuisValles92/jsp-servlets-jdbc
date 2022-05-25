@@ -1,0 +1,176 @@
+{
+	"info": {
+		"_postman_id": "ee3dad13-98ce-4077-ad25-c2b3ce276be7",
+		"name": "Web Student Tracker",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/web-student-tracker/StudentControllerServlet",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"web-student-tracker",
+						"StudentControllerServlet"
+					],
+					"query": [
+						{
+							"key": "command",
+							"value": "asdasd",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET LOAD",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/web-student-tracker/StudentControllerServlet?command=LOAD&id=32",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"web-student-tracker",
+						"StudentControllerServlet"
+					],
+					"query": [
+						{
+							"key": "command",
+							"value": "LOAD"
+						},
+						{
+							"key": "id",
+							"value": "32"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET DELETE",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/web-student-tracker/StudentControllerServlet?command=DELETE&id=32",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"web-student-tracker",
+						"StudentControllerServlet"
+					],
+					"query": [
+						{
+							"key": "command",
+							"value": "DELETE"
+						},
+						{
+							"key": "id",
+							"value": "32"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST POST",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/web-student-tracker/StudentControllerServlet?command=POST&firstName=Luis&lastName=Valles&email=luis@luv2code.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"web-student-tracker",
+						"StudentControllerServlet"
+					],
+					"query": [
+						{
+							"key": "command",
+							"value": "POST"
+						},
+						{
+							"key": "firstName",
+							"value": "Luis"
+						},
+						{
+							"key": "lastName",
+							"value": "Valles"
+						},
+						{
+							"key": "email",
+							"value": "luis@luv2code.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST PUT",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/web-student-tracker/StudentControllerServlet?command=PUT&id=32&firstName=Luis&lastName=Valles&email=luis@luv2code.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"web-student-tracker",
+						"StudentControllerServlet"
+					],
+					"query": [
+						{
+							"key": "command",
+							"value": "PUT"
+						},
+						{
+							"key": "id",
+							"value": "32"
+						},
+						{
+							"key": "firstName",
+							"value": "Luis"
+						},
+						{
+							"key": "lastName",
+							"value": "Valles"
+						},
+						{
+							"key": "email",
+							"value": "luis@luv2code.com"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -15,7 +15,7 @@ public class StudentDbUtil {
 	
 	public List<Student> getStudents() throws SQLException {
 		
-		List<Student> students = new ArrayList<>();
+		final List<Student> students = new ArrayList<>();
 		
 		Connection connection = null;
 		Statement statement = null;
@@ -60,41 +60,8 @@ public class StudentDbUtil {
 		}
 		
 	}
-
-	public void postStudent(Student student) throws SQLException {
-		
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		
-		try {
-			
-			// Get db connection
-			connection = dataSource.getConnection();
-			
-			// Create sql for insert
-			final String sql = "insert into student "
-								+ "(first_name, last_name, email) "
-								+ "values (?, ?, ?)";
-			preparedStatement = connection.prepareStatement(sql);
-			
-			// Set the param values for the student
-			preparedStatement.setString(1, student.getFirstName());
-			preparedStatement.setString(2, student.getLastName());
-			preparedStatement.setString(3, student.getEmail());
-			
-			// Execute preparedstatement
-			preparedStatement.execute();
-			
-		} finally {
-			
-			// Close JDBC objects
-			close(connection, preparedStatement, null);
-			
-		}
-		
-	}
 	
-	public Student getStudent(String id) throws NumberFormatException, SQLException, Exception {
+	public Student getStudent(String id) throws Exception {
 		
 		Student student = null;
 		
@@ -118,12 +85,13 @@ public class StudentDbUtil {
 			// Set the param value for the student
 			preparedStatement.setInt(1, studentId);
 			
-			// Execute query preparedstatement
+			// Execute query
 			resultSet = preparedStatement.executeQuery();
 			
-			// Retrieve data from result set row
+			// Process result set
 			if (resultSet.next()) {
 				
+				// Retrieve data from result set row
 				final String firstName = resultSet.getString("first_name");
 				final String lastName = resultSet.getString("last_name");
 				final String email = resultSet.getString("email");
@@ -146,41 +114,7 @@ public class StudentDbUtil {
 		
 	}
 	
-	public void putStudent(Student student) throws SQLException {
-		
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		
-		try {
-			
-			// Get db connection
-			connection = dataSource.getConnection();
-			
-			// Create sql for update preparedstatement
-			final String sql = "update student "
-								+ "set first_name=?, last_name=?, email=? "
-								+ "where id=?";
-			preparedStatement = connection.prepareStatement(sql);
-			
-			// Set the param values for the student
-			preparedStatement.setString(1, student.getFirstName());
-			preparedStatement.setString(2, student.getLastName());
-			preparedStatement.setString(3, student.getEmail());
-			preparedStatement.setInt(4, student.getId());
-			
-			// Execute preparedstatement
-			preparedStatement.execute();
-			
-		} finally {
-			
-			// Close JDBC objects
-			close(connection, preparedStatement, null);
-			
-		}
-		
-	}
-	
-	public void deleteStudent(String id) throws NumberFormatException, SQLException {
+	public void deleteStudent(String id) throws SQLException  {
 		
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -193,14 +127,81 @@ public class StudentDbUtil {
 			// Get db connection
 			connection = dataSource.getConnection();
 			
-			// Create sql for delete preparedstatement
+			// Create sql to delete selected student
 			final String sql = "delete from student where id=?";
 			preparedStatement = connection.prepareStatement(sql);
 			
-			// Set the param values for the student
+			// Set the param value for the student
 			preparedStatement.setInt(1, studentId);
 			
-			// Execute preparedstatement
+			// Execute
+			preparedStatement.execute();
+			
+		} finally {
+			
+			// Close JDBC objects
+			close(connection, preparedStatement, null);
+			
+		}
+		
+	}
+
+	public void postStudent(Student student) throws SQLException {
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try {
+			
+			// Get db connection
+			connection = dataSource.getConnection();
+			
+			// Create sql to insert a new student
+			final String sql = "insert into student "
+								+ "(first_name, last_name, email) "
+								+ "values (?, ?, ?)";
+			preparedStatement = connection.prepareStatement(sql);
+			
+			// Set the param values for the student
+			preparedStatement.setString(1, student.getFirstName());
+			preparedStatement.setString(2, student.getLastName());
+			preparedStatement.setString(3, student.getEmail());
+			
+			// Execute
+			preparedStatement.execute();
+			
+		} finally {
+			
+			// Close JDBC objects
+			close(connection, preparedStatement, null);
+			
+		}
+		
+	}
+	
+	public void putStudent(Student student) throws SQLException {
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try {
+			
+			// Get db connection
+			connection = dataSource.getConnection();
+			
+			// Create sql to update selected student
+			final String sql = "update student "
+								+ "set first_name=?, last_name=?, email=? "
+								+ "where id=?";
+			preparedStatement = connection.prepareStatement(sql);
+			
+			// Set the param values for the student
+			preparedStatement.setString(1, student.getFirstName());
+			preparedStatement.setString(2, student.getLastName());
+			preparedStatement.setString(3, student.getEmail());
+			preparedStatement.setInt(4, student.getId());
+			
+			// Execute
 			preparedStatement.execute();
 			
 		} finally {

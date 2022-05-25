@@ -61,24 +61,19 @@ public class StudentControllerServlet extends HttpServlet {
 					
 			}
 			
-		} catch (NumberFormatException numberFormatException) {
-			throw new ServletException(numberFormatException);
 		} catch (SQLException sqlException) {
 			throw new ServletException(sqlException);
-		} catch (ServletException servletException) {
-			throw new ServletException(servletException);
-		} catch (IOException ioException) {
-			throw new ServletException(ioException);
 		} catch (Exception exception) {
 			throw new ServletException(exception);
 		}
+		 
 		
 	}
 
 	private void listStudents(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
 		
 		// Get students from db util
-		List<Student> students = studentDbUtil.getStudents();
+		final List<Student> students = studentDbUtil.getStudents();
 		
 		// Add students to the request
 		request.setAttribute("STUDENT_LIST", students);
@@ -89,7 +84,7 @@ public class StudentControllerServlet extends HttpServlet {
 		
 	}
 	
-	private void loadStudent(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, SQLException, Exception, ServletException, IOException {
+	private void loadStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		// Read student id from form data
 		final String id = request.getParameter("id");
@@ -98,7 +93,7 @@ public class StudentControllerServlet extends HttpServlet {
 			throw new Exception("Missing id parameter");
 		}
 		
-		// Get student form database (db util)
+		// Get student from db util
 		final Student student = studentDbUtil.getStudent(id);
 		
 		// Place student in the request attribute
@@ -110,7 +105,7 @@ public class StudentControllerServlet extends HttpServlet {
 		
 	}
 	
-	private void deleteStudent(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, SQLException, Exception, IOException {
+	private void deleteStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		// Read student id from form data
 		final String id = request.getParameter("id");
@@ -119,7 +114,7 @@ public class StudentControllerServlet extends HttpServlet {
 			throw new Exception("Missing id parameter");
 		}
 		
-		// Delete student from database
+		// Delete student from db util
 		studentDbUtil.deleteStudent(id);
 		
 		sendRedirect(request, response);
@@ -179,7 +174,7 @@ public class StudentControllerServlet extends HttpServlet {
 		
 	}
 	
-	private void putStudent(HttpServletRequest request, HttpServletResponse response) throws Exception, SQLException, IOException {
+	private void putStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		// Read student info from form data
 		final String id = request.getParameter("id");
