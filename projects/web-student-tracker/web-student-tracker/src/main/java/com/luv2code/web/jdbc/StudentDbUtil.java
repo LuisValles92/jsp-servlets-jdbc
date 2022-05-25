@@ -61,6 +61,39 @@ public class StudentDbUtil {
 		
 	}
 
+	public void addStudent(Student student) throws Exception {
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try {
+			
+			// Get a connection
+			connection = dataSource.getConnection();
+			
+			// Create sql for insert
+			final String sql = "insert into student "
+								+ "(first_name, last_name, email) "
+								+ "values (?, ?, ?)";
+			preparedStatement = connection.prepareStatement(sql);
+			
+			// Set the param values for the student
+			preparedStatement.setString(1, student.getFirstName());
+			preparedStatement.setString(2, student.getLastName());
+			preparedStatement.setString(3, student.getEmail());
+			
+			// Execute sql insert
+			preparedStatement.execute();
+			
+		} finally {
+			
+			// Close JDBC objects
+			close(connection, preparedStatement, null);
+			
+		}
+		
+	}
+	
 	private void close(Connection connection, Statement statement, ResultSet resultSet) {
 		
 		try {
