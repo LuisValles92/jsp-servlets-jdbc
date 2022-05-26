@@ -145,6 +145,71 @@ public class StudentDbUtil {
 		}
 		
 	}
+	
+	public List<Student> searchStudents(String searchName) throws SQLException {
+		
+		final List<Student> students = new ArrayList<>();
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			
+			// Get db connection
+			connection = dataSource.getConnection();
+			
+			if (searchName != null && searchName.trim().length() > 0) {
+				
+				// Create sql to search for students by name
+				final String sql = "select * from student " + ""
+									+ "where lower(first_name) like ? or lower(last_name) like ? " 
+									+ "order by first_name";
+				preparedStatement = connection.prepareStatement(sql);
+				
+				// Set the param values for the student
+				final String searchNameLike = "%" + searchName.toLowerCase() + "%"; 
+				preparedStatement.setString(1, searchNameLike);
+				preparedStatement.setString(2, searchNameLike);
+				
+			} else {
+				
+				// Create sql to get all students
+				final String sql = "select * from student order by first_name";
+				preparedStatement = connection.prepareStatement(sql);
+				
+			}
+			
+			// Execute
+			resultSet = preparedStatement.executeQuery();
+			
+			// Process result set
+			while (resultSet.next()) {
+				
+				// Retrieve data from result set row
+				final int id = resultSet.getInt("id");
+				final String firstName = resultSet.getString("first_name");
+				final String lastName = resultSet.getString("last_name");
+				final String email = resultSet.getString("email");
+				
+				// Create new student object
+				final Student student = new Student(id, firstName, lastName, email);
+				
+				// Add it to the list of students
+				students.add(student);
+				
+			}
+			
+			return students;
+			
+		} finally {
+			
+			// Close JDBC objects
+			close(connection, preparedStatement, resultSet);
+			
+		}
+		
+	}
 
 	public void postStudent(Student student) throws SQLException {
 		

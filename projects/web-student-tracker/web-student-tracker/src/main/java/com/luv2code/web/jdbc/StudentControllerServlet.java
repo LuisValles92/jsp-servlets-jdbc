@@ -56,6 +56,10 @@ public class StudentControllerServlet extends HttpServlet {
 					deleteStudent(request, response);
 					break;
 					
+				case "SEARCH":
+					searchStudents(request, response);
+					break;
+					
 				default:
 					listStudents(request, response);
 					
@@ -118,6 +122,23 @@ public class StudentControllerServlet extends HttpServlet {
 		studentDbUtil.deleteStudent(id);
 		
 		sendRedirect(request, response);
+		
+	}
+	
+	private void searchStudents(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+		
+		// Read search name from form data
+		final String searchName = request.getParameter("searchName");
+		
+		// Search students from db util
+		final List<Student> students = studentDbUtil.searchStudents(searchName);
+		
+		// Add students to the request
+		request.setAttribute("STUDENT_LIST", students);
+		
+		// Send to JSP page (view)
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/list-students.jsp");
+		requestDispatcher.forward(request, response);
 		
 	}
 
