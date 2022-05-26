@@ -7,6 +7,8 @@
 
 	<link type="text/css" rel="stylesheet" href="css/style.css">
 	<link type="text/css" rel="stylesheet" href="css/add-update-student-style.css">
+	
+	<script type="text/javascript" src="js/student-validation.js"></script>
 
 </head>
 
@@ -21,7 +23,8 @@
 	<div id="container">
 		<h3>Update Student</h3>
 		
-		<form action="StudentControllerServlet" method="POST">
+		<form action="StudentControllerServlet" method="POST"
+			name="studentForm" onSubmit="return validateForm()">
 		
 			<input type="hidden" name="command" value="PUT" />
 			
