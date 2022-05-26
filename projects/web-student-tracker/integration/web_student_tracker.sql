@@ -30,7 +30,7 @@ CREATE TABLE `student` (
   `last_name` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (29,'Carmen','Pastor','carmen@luv2code.com'),(31,'Antonio','Valles','antonio@luv2code.com'),(32,'Luis','Valles','luis@luv2code.com');
+INSERT INTO `student` VALUES (1,'Bill','Gates','bill@luv2code.com'),(2,'Steve','Jobs','steve@luv2code.com'),(3,'Larry','Page','larry@luv2code.com'),(4,'Jeff','Brezos','jeff@luv2code.com');
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-25 19:05:50
+-- Dump completed on 2022-05-26 11:43:08

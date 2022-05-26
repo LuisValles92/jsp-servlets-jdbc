@@ -2,7 +2,8 @@
 	"info": {
 		"_postman_id": "ee3dad13-98ce-4077-ad25-c2b3ce276be7",
 		"name": "Web Student Tracker",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15769248"
 	},
 	"item": [
 		{
@@ -38,7 +39,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/web-student-tracker/StudentControllerServlet?command=LOAD&id=32",
+					"raw": "http://localhost:8080/web-student-tracker/StudentControllerServlet?command=LOAD&id=1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -55,7 +56,37 @@
 						},
 						{
 							"key": "id",
-							"value": "32"
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET SEARCH",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/web-student-tracker/StudentControllerServlet?command=SEARCH&searchName=job",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"web-student-tracker",
+						"StudentControllerServlet"
+					],
+					"query": [
+						{
+							"key": "command",
+							"value": "SEARCH"
+						},
+						{
+							"key": "searchName",
+							"value": "job"
 						}
 					]
 				}
@@ -68,7 +99,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/web-student-tracker/StudentControllerServlet?command=DELETE&id=32",
+					"raw": "http://localhost:8080/web-student-tracker/StudentControllerServlet?command=DELETE&id=1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -85,7 +116,7 @@
 						},
 						{
 							"key": "id",
-							"value": "32"
+							"value": "1"
 						}
 					]
 				}
@@ -98,7 +129,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/web-student-tracker/StudentControllerServlet?command=POST&firstName=Luis&lastName=Valles&email=luis@luv2code.com",
+					"raw": "http://localhost:8080/web-student-tracker/StudentControllerServlet?command=POST&firstName=Dennis&lastName=Ritchie&email=dennis@luv2code.com",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -115,15 +146,15 @@
 						},
 						{
 							"key": "firstName",
-							"value": "Luis"
+							"value": "Dennis"
 						},
 						{
 							"key": "lastName",
-							"value": "Valles"
+							"value": "Ritchie"
 						},
 						{
 							"key": "email",
-							"value": "luis@luv2code.com"
+							"value": "dennis@luv2code.com"
 						}
 					]
 				}
@@ -136,7 +167,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/web-student-tracker/StudentControllerServlet?command=PUT&id=32&firstName=Luis&lastName=Valles&email=luis@luv2code.com",
+					"raw": "http://localhost:8080/web-student-tracker/StudentControllerServlet?command=PUT&id=2&firstName=Sergey&lastName=Brin&email=sergey@luv2code.com",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -153,19 +184,19 @@
 						},
 						{
 							"key": "id",
-							"value": "32"
+							"value": "2"
 						},
 						{
 							"key": "firstName",
-							"value": "Luis"
+							"value": "Sergey"
 						},
 						{
 							"key": "lastName",
-							"value": "Valles"
+							"value": "Brin"
 						},
 						{
 							"key": "email",
-							"value": "luis@luv2code.com"
+							"value": "sergey@luv2code.com"
 						}
 					]
 				}
